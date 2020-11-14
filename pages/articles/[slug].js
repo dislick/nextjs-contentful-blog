@@ -16,7 +16,7 @@ export async function getStaticPaths() {
     paths: data.items.map((item) => ({
       params: { slug: item.fields.slug },
     })),
-    fallback: false,
+    fallback: true,
   };
 }
 
@@ -30,11 +30,12 @@ export async function getStaticProps({ params }) {
     props: {
       article: data.items[0],
     },
+    revalidate: 1,
   };
 }
 
 export default function Article({ article }) {
-  console.log(article);
+  if (!article) return <div>404</div>;
 
   return (
     <div>
